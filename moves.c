@@ -38,7 +38,7 @@ int secureScanf(const char *message, int min, int max) {
 void moveFinder(char board[8][8]){
         int mv;
         int mv1,mv2,mv3,mv4;
-        int x1,y1,x2,y2,kx1,ky1,kx2,ky2;
+        int y1,y2,kx1,ky1,kx2,ky2;
         int x_pos,y_pos;
         
         printf("Quelle pièce voulez-vous déplacer ?\nDonnez ses coordonées:\n");
