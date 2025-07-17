@@ -6,7 +6,7 @@
 
 #define TAILLE_MAX 100
 
-int scanfv2(const char *message, int min, int max) {
+int secureScanf(const char *message, int min, int max) {
     char buffer[TAILLE_MAX];
     int valeur;
     char extra;
@@ -42,8 +42,8 @@ void moveFinder(char board[8][8]){
         int x_pos,y_pos;
         
         printf("Quelle pièce voulez-vous déplacer ?\nDonnez ses coordonées:\n");
-        x_pos = scanfv2("Abscisse:",0,7);
-        y_pos = scanfv2("Ordonnée:",0,7);
+        x_pos = secureScanf("Abscisse:",0,7);
+        y_pos = secureScanf("Ordonnée:",0,7);
         
         char piece = board[y_pos][x_pos];
         printf("Tu as choisi de déplacer un '%c'\n",piece);
@@ -104,7 +104,7 @@ void moveFinder(char board[8][8]){
                 moveFinder(board);
                 break;
         }
-                mv = scanfv2("Choisissez la case sur laquelle vous diriger.\n",1,4);
+                mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n",1,4);
                 switch(mv){
                     case 1:
                         if(mv1 == 1){
