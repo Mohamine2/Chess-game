@@ -1,4 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include "board.h"
+
+#define TAILLE_MAX 100
+
+int scanfv2(const char *message, int min, int max) {
+    char buffer[TAILLE_MAX];
+    int valeur;
+    char extra;
+
+    while (1) {
+        printf("%s ", message);
+
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            fprintf(stderr, "Erreur de lecture.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        // Si sscanf lit autre chose qu’un entier seul → erreur
+        if (sscanf(buffer, "%d %c", &valeur, &extra) != 1) {
+            printf("Entrée invalide. Veuillez entrer un nombre entier.\n");
+            continue;
+        }
+
+        // Si hors bornes → erreur
+        if (valeur < min || valeur > max) {
+            printf("Valeur hors limites (%d à %d).\n", min, max);
+            continue;
+        }
+
+        return valeur;
+    }
+}
 
 void moveFinder(char board[8][8]){
         int mv;
@@ -7,30 +42,13 @@ void moveFinder(char board[8][8]){
         int x_pos,y_pos;
         
         printf("Quelle pièce voulez-vous déplacer ?\nDonnez ses coordonées:\n");
-        printf("Abscisse: ");
-        scanf(" %d",&x_pos);
-        if(x_pos <0 || x_pos >7){
-            do{
-                printf("Votre coordonnée ne correspond pas aux limites de l'échiquier.\nVeuillez entrer une coordonnée valide.\n");
-                scanf(" %d",&x_pos);
-            }while(x_pos <0 || x_pos >7);
-        }
-        printf("Ordonnée: ");
-        scanf(" %d",&y_pos);
-        if(y_pos <0 || y_pos >7){
-            do{
-                printf("Votre coordonnée ne correspond pas aux limites de l'échiquier.\nVeuillez entrer une coordonnée valide.\n");
-                scanf(" %d",&y_pos);
-            }while(y_pos <0 || y_pos >7);
-        }
+        x_pos = scanfv2("Abscisse:",0,7);
+        y_pos = scanfv2("Ordonnée:",0,7);
+        
         char piece = board[y_pos][x_pos];
         printf("Tu as choisi de déplacer un '%c'\n",piece);
         
         switch(piece){
-            case ' ':
-                printf("Il n'y a pas de pièce sur cette case.\nChoisissez une autre case.\n");
-                moveFinder(board);
-                break;
             case 'P':
                 if (board[y_pos+1][x_pos] == ' ' && y_pos+1 >= 0 && x_pos >= 0){
                     y1 = y_pos+1;
@@ -80,9 +98,13 @@ void moveFinder(char board[8][8]){
                     mv4 = 1;
                 }
                 break;
+                
+                default:
+                printf("Il n'y a pas de pièce sur cette case.\nChoisissez une autre case.\n");
+                moveFinder(board);
+                break;
         }
-                printf("Choisissez la case sur laquelle vous diriger.\n");
-                scanf(" %d",&mv);
+                mv = scanfv2("Choisissez la case sur laquelle vous diriger.\n",1,4);
                 switch(mv){
                     case 1:
                         if(mv1 == 1){
