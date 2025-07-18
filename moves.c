@@ -37,8 +37,8 @@ int secureScanf(const char *message, int min, int max) {
 
 void moveFinder(char board[8][8]){
         int mv;
-        int mv1,mv2,mv3,mv4;
-        int y1,y2,kx1,ky1,kx2,ky2;
+        int mv1,mv2,mv3,mv4,mv5,mv6,mv7,mv8,mv9,mv10;
+        int x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6,x7,y7,x8,y8,kx1,ky1,kx2,ky2;
         int x_pos,y_pos;
         
         printf("Quelle pièce voulez-vous déplacer ?\nDonnez ses coordonées:\n");
@@ -52,12 +52,14 @@ void moveFinder(char board[8][8]){
             case 'P':
                 if (board[y_pos+1][x_pos] == ' ' && y_pos+1 >= 0 && x_pos >= 0){
                     y1 = y_pos+1;
-                    printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x_pos,y1);
+                    x1 = x_pos;
+                    printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x1,y1);
                     mv1 = 1;
                 }
                 if (board[y_pos+2][x_pos] == ' ' && y_pos == 1 && y_pos+2 >= 0 && x_pos >= 0){
                     y2 = y_pos+2;
-                    printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x_pos,y2);
+                    x2 = x_pos;
+                    printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x2,y2);
                     mv2 = 1;
                 }
                 if (board[y_pos+1][x_pos-1] != ' ' && y_pos+1 >= 0 && x_pos-1 >= 0){
@@ -75,27 +77,81 @@ void moveFinder(char board[8][8]){
                 break;
                 
                 case 'p':
-                    if (board[y_pos-1][x_pos] == ' ' && y_pos-1 >= 0 && x_pos >= 0){
+                    if (board[y_pos-1][x_pos] == ' ' && y_pos-1 >= 0){
                     y1 = y_pos-1;
-                    printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x_pos,y1);
+                    x1 = x_pos;
+                    printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x1,y1);
                     mv1 = 1;
                 }
-                if (board[y_pos-2][x_pos] == ' ' && y_pos == 6 && y_pos-2 >= 0 && x_pos >= 0){
+                if (board[y_pos-2][x_pos] == ' ' && y_pos == 6 && y_pos-2 >= 0){
                     y2 = y_pos-2;
-                    printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x_pos,y2);
+                    x2 = x_pos;
+                    printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x2,y2);
                     mv2 = 1;
                 }
-                if (board[y_pos-1][x_pos-1] != ' ' && y_pos+1 >= 0 && x_pos-1 >= 0){
+                if (board[y_pos-1][x_pos-1] != ' ' && y_pos+1 <= 7 && x_pos-1 >= 0){
                     ky1 = y_pos-1;
                     kx1 = x_pos-1;
-                    printf("Vous pouvez tuer (3) la pièce %c à la case x:%d et y:%d\n",board[ky1][kx1], kx1,ky1);
-                    mv3 = 1;
+                    printf("Vous pouvez tuer (9) la pièce %c à la case x:%d et y:%d\n",board[ky1][kx1], kx1,ky1);
+                    mv9 = 1;
                 }
-                if (board[y_pos-1][x_pos+1] != ' ' && y_pos+1 >= 0 && x_pos+1 >= 0){
+                if (board[y_pos-1][x_pos+1] != ' ' && y_pos+1 <= 7 && x_pos+1 <= 7){
                     ky2 = y_pos-1;
                     kx2 = x_pos+1;
-                    printf("Vous pouvez tuer (4) la pièce %c à la case x:%d et y:%d\n",board[ky2][kx2],kx2,ky2);
+                    printf("Vous pouvez tuer (10) la pièce %c à la case x:%d et y:%d\n",board[ky2][kx2],kx2,ky2);
+                    mv10 = 1;
+                }
+                break;
+
+                case 'n':
+                case 'N':
+                if(board[y_pos-2][x_pos+1] == ' ' && y_pos-2 >= 0 && x_pos+1 <= 7){
+                    x1 = x_pos+1;
+                    y1= y_pos-2;
+                    printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x1, y1);
+                    mv1 = 1;
+                }
+                if(board[y_pos-2][x_pos-1] == ' ' && y_pos-2 >= 0 && x_pos-1 >= 0){
+                    x2 = x_pos-1;
+                    y2= y_pos-2;
+                    printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x2, y2);
+                    mv2 = 1;
+                }
+                if(board[y_pos+2][x_pos+1] == ' ' && y_pos+2 <= 7 && x_pos+1 <= 7){
+                    x3 = x_pos+1;
+                    y3= y_pos+2;
+                    printf("Vous pouvez déplacer (3) votre pion à la case x:%d et y:%d\n", x3, y3);
+                    mv3 = 1;
+                }
+                if(board[y_pos+2][x_pos-1] == ' ' && y_pos+2 <= 7 && x_pos-1 >=0 ){
+                    x4 = x_pos-1;
+                    y4= y_pos+2;
+                    printf("Vous pouvez déplacer (4) votre pion à la case x:%d et y:%d\n", x4, y4);
                     mv4 = 1;
+                }
+                if(board[y_pos+1][x_pos-2] == ' ' && y_pos+1 <= 7 && x_pos-2 >=0 ){
+                    x5 = x_pos-2;
+                    y5= y_pos+1;
+                    printf("Vous pouvez déplacer (5) votre pion à la case x:%d et y:%d\n", x5, y5);
+                    mv5 = 1;
+                }
+                if(board[y_pos+1][x_pos+2] == ' ' && y_pos+1 <= 7 && x_pos+2 <= 7 ){
+                    x6 = x_pos+2;
+                    y6= y_pos+1;
+                    printf("Vous pouvez déplacer (6) votre pion à la case x:%d et y:%d\n", x6, y6);
+                    mv6 = 1;
+                }
+                if(board[y_pos-1][x_pos+2] == ' ' && y_pos-1 >= 0 && x_pos+2 <= 7 ){
+                    x7 = x_pos+2;
+                    y7= y_pos-1;
+                    printf("Vous pouvez déplacer (7) votre pion à la case x:%d et y:%d\n", x7, y7);
+                    mv7 = 1;
+                }
+                if(board[y_pos-1][x_pos-2] == ' ' && y_pos-1 >= 0 && x_pos-2 >= 0 ){
+                    x8 = x_pos-2;
+                    y8= y_pos-1;
+                    printf("Vous pouvez déplacer (8) votre pion à la case x:%d et y:%d\n", x8, y8);
+                    mv8 = 1;
                 }
                 break;
                 
@@ -104,11 +160,11 @@ void moveFinder(char board[8][8]){
                 moveFinder(board);
                 break;
         }
-                mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n",1,4);
+                mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n",1,10);
                 switch(mv){
                     case 1:
                         if(mv1 == 1){
-                            board[y1][x_pos] = board[y_pos][x_pos];
+                            board[y1][x1] = board[y_pos][x_pos];
                             board[y_pos][x_pos]= ' ';
                         }
                         else{
@@ -118,7 +174,7 @@ void moveFinder(char board[8][8]){
                         break;
                     case 2:
                         if(mv2 == 1){
-                            board[y2][x_pos] = board[y_pos][x_pos];
+                            board[y2][x2] = board[y_pos][x_pos];
                             board[y_pos][x_pos]= ' ';
                         }
                         else{
@@ -126,8 +182,73 @@ void moveFinder(char board[8][8]){
                             moveFinder(board);
                         }
                         break;
+
                     case 3:
                         if(mv3 == 1){
+                            board[y3][x3] = board[y_pos][x_pos];
+                            board[y_pos][x_pos]= ' ';
+                        }
+                        else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                        }
+                        break;
+
+                    case 4:
+                        if(mv4 == 1){
+                            board[y4][x4] = board[y_pos][x_pos];
+                            board[y_pos][x_pos]= ' ';
+                        }
+                        else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                        }
+                        break;
+
+                    case 5:
+                    if(mv5 == 1){
+                        board[y5][x5] = board[y_pos][x_pos];
+                        board[y_pos][x_pos]= ' ';
+                    }
+                    else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                    }
+                    break;
+
+                    case 6:
+                        if(mv6 == 1){
+                            board[y6][x6] = board[y_pos][x_pos];
+                            board[y_pos][x_pos]= ' ';
+                        }
+                        else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                        }
+                        break;
+                    case 7:
+                        if(mv7 == 1){
+                            board[y7][x7] = board[y_pos][x_pos];
+                            board[y_pos][x_pos]= ' ';
+                        }
+                        else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                        }
+                        break;
+                    case 8:
+                        if(mv8 == 1){
+                            board[y8][x8] = board[y_pos][x_pos];
+                            board[y_pos][x_pos]= ' ';
+                        }
+                        else{
+                            printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
+                            moveFinder(board);
+                        }
+                        break;
+
+                    case 9:
+                        if(mv9 == 1){
                             board[ky1][kx1] = board[y_pos][x_pos];
                             board[y_pos][x_pos]= ' ';
                         }
@@ -136,8 +257,8 @@ void moveFinder(char board[8][8]){
                             moveFinder(board);
                         }
                         break;
-                    case 4:
-                    if(mv4 == 1){
+                    case 10:
+                    if(mv10 == 1){
                         board[ky2][kx2] = board[y_pos][x_pos];
                         board[y_pos][x_pos]= ' ';
                     }
