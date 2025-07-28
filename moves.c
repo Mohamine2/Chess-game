@@ -57,30 +57,41 @@ void pawnMoves(char board[8][8],int x_pos,int y_pos,int direction, int op_line,i
     int mv;
     int mv1, mv2, mv3, mv4;
     int x1, y1, x2, y2, kx1, ky1, kx2, ky2;
+    int canmove = 0;
 
     if (board[y_pos+direction][x_pos] == ' ' && limits(y_pos+direction,x_pos)){
         y1 = y_pos+direction;
         x1 = x_pos;
         printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x1,y1);
         mv1 = 1;
+        canmove = 1;
     }
     if (board[y_pos+2*direction][x_pos] == ' ' && y_pos == op_line && limits(y_pos+2*direction,x_pos)){
         y2 = y_pos+2*direction;
         x2 = x_pos;
         printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x2,y2);
         mv2 = 1;
+        canmove = 1;
     }
     if (board[y_pos+direction][x_pos-1] != ' ' && limits(y_pos+direction,x_pos-1)  && !isAlly(board[y_pos+direction][x_pos-1],team)){
         ky1 = y_pos+direction;
         kx1 = x_pos-1;
         printf("Vous pouvez tuer (3) la pièce %c à la case x:%d et y:%d\n",board[ky1][kx1], kx1,ky1);
         mv3 = 1;
+        canmove = 1;
     }
     if (board[y_pos+direction][x_pos+1] != ' ' && limits(y_pos+direction,x_pos+1) && !isAlly(board[y_pos+direction][x_pos+1],team)){
         ky2 = y_pos+direction;
         kx2 = x_pos+1;
         printf("Vous pouvez tuer (4) la pièce %c à la case x:%d et y:%d\n",board[ky2][kx2],kx2,ky2);
         mv4 = 1;
+        canmove = 1;
+    }
+
+    if(!canmove){
+        printf("Votre pion ne peut pas se déplacer. Veuillez recommencer svp\n");
+        moveFinder(board,team);
+        return ;
     }
 
     mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n",1,4);
@@ -140,54 +151,69 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
     int mv;
     int mv1, mv2, mv3, mv4, mv5, mv6, mv7, mv8;
     int x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7, x8, y8;
+    int canmove = 0;
 
     if (!isAlly(board[y_pos - 2][x_pos + 1],team) && y_pos - 2 >= 0 && x_pos + 1 <= 7) {
         x1 = x_pos + 1;
         y1 = y_pos - 2;
-        printf("Vous pouvez déplacer (1) votre pion à la case x:%d et y:%d\n", x1, y1);
+        printf("Vous pouvez déplacer (1) votre cavalier à la case x:%d et y:%d\n", x1, y1);
         mv1 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos - 2][x_pos - 1],team) && y_pos - 2 >= 0 && x_pos - 1 >= 0) {
         x2 = x_pos - 1;
         y2 = y_pos - 2;
-        printf("Vous pouvez déplacer (2) votre pion à la case x:%d et y:%d\n", x2, y2);
+        printf("Vous pouvez déplacer (2) votre cavalier à la case x:%d et y:%d\n", x2, y2);
         mv2 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos + 2][x_pos + 1],team) && y_pos + 2 <= 7 && x_pos + 1 <= 7) {
         x3 = x_pos + 1;
         y3 = y_pos + 2;
-        printf("Vous pouvez déplacer (3) votre pion à la case x:%d et y:%d\n", x3, y3);
+        printf("Vous pouvez déplacer (3) votre cavalier à la case x:%d et y:%d\n", x3, y3);
         mv3 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos + 2][x_pos - 1],team) && y_pos + 2 <= 7 && x_pos - 1 >= 0) {
         x4 = x_pos - 1;
         y4 = y_pos + 2;
-        printf("Vous pouvez déplacer (4) votre pion à la case x:%d et y:%d\n", x4, y4);
+        printf("Vous pouvez déplacer (4) votre cavalier à la case x:%d et y:%d\n", x4, y4);
         mv4 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos + 1][x_pos - 2],team) && y_pos + 1 <= 7 && x_pos - 2 >= 0) {
         x5 = x_pos - 2;
         y5 = y_pos + 1;
-        printf("Vous pouvez déplacer (5) votre pion à la case x:%d et y:%d\n", x5, y5);
+        printf("Vous pouvez déplacer (5) votre cavalier à la case x:%d et y:%d\n", x5, y5);
         mv5 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos + 1][x_pos + 2],team) && y_pos + 1 <= 7 && x_pos + 2 <= 7) {
         x6 = x_pos + 2;
         y6 = y_pos + 1;
-        printf("Vous pouvez déplacer (6) votre pion à la case x:%d et y:%d\n", x6, y6);
+        printf("Vous pouvez déplacer (6) votre cavalier à la case x:%d et y:%d\n", x6, y6);
         mv6 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos - 1][x_pos + 2],team) && y_pos - 1 >= 0 && x_pos + 2 <= 7) {
         x7 = x_pos + 2;
         y7 = y_pos - 1;
-        printf("Vous pouvez déplacer (7) votre pion à la case x:%d et y:%d\n", x7, y7);
+        printf("Vous pouvez déplacer (7) votre cavalier à la case x:%d et y:%d\n", x7, y7);
         mv7 = 1;
+        canmove = 1;
     }
     if (!isAlly(board[y_pos - 1][x_pos - 2],team) && y_pos - 1 >= 0 && x_pos - 2 >= 0) {
         x8 = x_pos - 2;
         y8 = y_pos - 1;
-        printf("Vous pouvez déplacer (8) votre pion à la case x:%d et y:%d\n", x8, y8);
+        printf("Vous pouvez déplacer (8) votre cavalier à la case x:%d et y:%d\n", x8, y8);
         mv8 = 1;
+        canmove = 1;
+    }
+
+    if(!canmove){
+        printf("Votre cavalier ne peut pas se déplacer. Veuillez recommencer svp\n");
+        moveFinder(board,team);
+        return ;
     }
 
     mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n", 1, 8);
@@ -202,6 +228,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
     case 2:
@@ -214,6 +241,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
 
@@ -224,6 +252,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
 
@@ -234,6 +263,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
 
@@ -244,6 +274,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
 
@@ -254,6 +285,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
     case 7:
@@ -263,6 +295,7 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
     case 8:
@@ -272,14 +305,81 @@ void knightMoves(char board[8][8], int x_pos, int y_pos, int team) {
         } else {
             printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
             moveFinder(board,team);
+            return ;
         }
         break;
-    default:
-        printf("Ce déplacement n'existe pas.\nVeuillez recommencer svp\n");
-        moveFinder(board,team);
-        break;
+    }
+}
+
+
+void rookMoves(char board[8][8], int x_pos, int y_pos, int team){
+
+    int y = y_pos;
+    int x = x_pos;
+    int count = 0;
+    int x_array[50];
+    int y_array[50];
+    int index = 0;
+    int mv;
+
+    while (y+1 <=7 && !isAlly(board[y+1][x],team)){
+        y++;
+        y_array[index] = y;
+        x_array[index] = x;
+        index++;
+        count++;
+    }
+    y=y_pos;
+    x=x_pos;
+     while (y-1 >= 0 && !isAlly(board[y-1][x],team)){
+        y--;
+        y_array[index] = y;
+        x_array[index] = x;
+        index++;
+        count++;
+    }
+    y=y_pos;
+    x=x_pos;
+     while (x + 1 <=7 && !isAlly(board[y][x+1],team)){
+        x++;
+        y_array[index] = y;
+        x_array[index] = x;
+        index++;
+        count++;
+    }
+    y=y_pos;
+    x=x_pos;
+     while (x - 1 >= 0 && !isAlly(board[y][x-1],team)){
+        x--;
+        y_array[index] = y;
+        x_array[index] = x;
+        index++;
+        count++;
     }
 
+    if(count == 0){
+        printf("Vous ne pouvez pas déplacer cette pièce. Veuillez recommencer:* svp\n");
+        moveFinder(board,team);
+        return ;
+    }
+    else{
+
+        for(int i=0; i<count; i++){
+            printf("Vous pouvez déplacer (%d) votre tour à la case x:%d et y:%d\n",i+1, x_array[i], y_array[i]);
+        }
+
+        mv = secureScanf("Choisissez la case sur laquelle vous diriger.\n", 1, count+1);
+
+        for(int j=0; j<count;j++){
+            if(mv==j+1){
+                y = y_array[j];
+                x = x_array[j];
+                board[y][x] = board[y_pos][x_pos];
+                board[y_pos][x_pos] = ' ';
+                break;
+            }
+        }
+    }
 }
 
 void moveFinder(char board[8][8], int team){
@@ -325,6 +425,24 @@ void moveFinder(char board[8][8], int team){
                     return ;
                 }
                 knightMoves(board,x_pos,y_pos,team);
+            break;
+
+            case 'r':
+                if (team == 0){
+                    printf("Vous pouvez uniquement déplacer vos pions\n");
+                    moveFinder(board,team);
+                    return ;
+                }
+                rookMoves(board,x_pos,y_pos,team);
+            break;
+
+            case 'R':
+                if(team == 1){
+                    printf("Vous pouvez uniquement déplacer vos pions\n");
+                    moveFinder(board,team);
+                    return ;
+                }
+                rookMoves(board,x_pos,y_pos,team);
             break;
                 
             default:
