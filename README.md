@@ -26,9 +26,11 @@
 
 ```bash
 make
+```
 
 ### Run the game
 
 ```bash
 make run
+```
 
